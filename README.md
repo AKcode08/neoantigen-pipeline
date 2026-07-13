@@ -86,7 +86,7 @@ Thresholds are CV-derived, not intuition-set. The originals (0.70 / 0.30) produc
 
 The synthesis layer is deliberately **not** ablated in AUROC, and that is a methodological position rather than an omission. Claude reads the same five inputs the ensemble does: it cannot conjure a signal that is not there, and scoring it as a sixth quantitative predictor would measure "a learned reweighting of inputs we already have," not its actual contribution.
 
-Its real value is **category-level reasoning that no reweighting can reach.** The clearest demonstration: `NLVPMVATV` scored highly across all five layers: 16.6 nM binding, 0.97 presentation, high immunogenicity, strong structure, 754 IEDB assays at a 98% positive response rate. The ensemble said INCLUDE with 0.93 consensus. Claude said **EXCLUDE**, correctly identifying it as the CMV pp65 immunodominant viral epitope — not a tumor neoantigen at all, and useless in a cancer vaccine regardless of how well it scores.
+Its real value is **category-level reasoning that no reweighting can reach.** The clearest demonstration: `NLVPMVATV` scored highly across all five layers: 16.6 nM binding, 0.97 presentation, high immunogenicity, strong structure, 754 IEDB assays at a 98% positive response rate. The ensemble said INCLUDE with 0.93 consensus. Claude said **EXCLUDE**, correctly identifying it as the CMV pp65 immunodominant viral epitope, not a tumor neoantigen at all, and useless in a cancer vaccine regardless of how well it scores.
 
 No numerical reweighting of those five layers reaches that conclusion. That is the layer's job.
 
