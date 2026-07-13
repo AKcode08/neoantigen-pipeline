@@ -174,7 +174,7 @@ NCBI_EMAIL=...
 
 ## In progress
 
-**TESLA external validation.** 608 peptides from the Tumor Neoantigen Selection Alliance ([Wells et al., *Cell* 2020](https://doi.org/10.1016/j.cell.2020.09.015)), 37 immunogenic (6.1% prevalence). Running the shipped configuration with **frozen weights and frozen thresholds** — no further tuning. This is the step that converts internal validation into an external benchmark.
+**TESLA external validation.** 608 peptides from the Tumor Neoantigen Selection Alliance ([Wells et al., *Cell* 2020](https://doi.org/10.1016/j.cell.2020.09.015)), 37 immunogenic (6.1% prevalence). Running the shipped configuration with **frozen weights and frozen thresholds** -> no further tuning. This is the step that converts internal validation into an external benchmark.
 
 The class balance is a genuine stress test: ITSNdb is 65% immunogenic, TESLA is 6%. These are fundamentally different operating conditions, and performance on both is what real-world deployment looks like. For calibration, the TESLA consortium reported that *no participating team placed more than 20 of the 37 immunogenic peptides in their top 100* — the best pipelines in the field recover roughly half.
 
