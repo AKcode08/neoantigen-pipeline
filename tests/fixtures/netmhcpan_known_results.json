@@ -1,0 +1,36 @@
+{
+  "known_epitopes": [
+    {
+      "name": "KRAS_G12D_HLA_A0201",
+      "peptide": "KRASGSDFVQ",
+      "hla": "HLA-A*02:01",
+      "expected_binding_level": "intermediate",
+      "expected_affinity_range": [1000, 5000],
+      "notes": "Common HCC neoantigen, HLA-A*02:01 binding"
+    },
+    {
+      "name": "TP53_R175H_HLA_A0201",
+      "peptide": "RMSFVKQFQ",
+      "hla": "HLA-A*02:01",
+      "expected_binding_level": "intermediate",
+      "expected_affinity_range": [500, 5000],
+      "notes": "TP53 mutation, reasonable binder"
+    },
+    {
+      "name": "Strong_binder_control",
+      "peptide": "NLVPMVATV",
+      "hla": "HLA-A*02:01",
+      "expected_binding_level": "strong",
+      "expected_affinity_range": [0, 500],
+      "notes": "Known strong binder (CMV epitope)"
+    },
+    {
+      "name": "Weak_binder_control",
+      "peptide": "XXXDEFGHI",
+      "hla": "HLA-B*44:02",
+      "expected_binding_level": "weak",
+      "expected_affinity_range": [5000, 50000],
+      "notes": "Poor motif match"
+    }
+  ]
+}

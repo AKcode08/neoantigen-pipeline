@@ -1,0 +1,59 @@
+# Neoantigen Prediction Pipeline — dependencies
+#
+# REQUIRES PYTHON 3.11
+# Python 3.13+ removed the `pipes` stdlib module, which MHCflurry depends on.
+# Python 3.12 is untested. Use 3.11.
+#
+#   python3.11 -m venv venv311
+#   source venv311/bin/activate
+#   pip install -r requirements.txt
+#   mhcflurry-downloads fetch          # ~500MB of models, one-time
+#
+# External (not pip-installable — see README):
+#   - BigMHC:   git clone https://github.com/KarchinLab/bigmhc.git
+#   - NeoaPred: docker pull panda1103/neoapred:1.0.0
+
+# ---------------------------------------------------------------------------
+# Core prediction — Layers 1 & 2
+# ---------------------------------------------------------------------------
+mhcflurry>=2.0.6
+
+# PINNED: mhcflurry breaks on numpy 2.x, and scikit-learn >=1.4 raises
+# ComplexWarning during affinity prediction. Do not bump these without testing.
+numpy==1.26.4
+scikit-learn==1.3.2
+
+# ---------------------------------------------------------------------------
+# Layer 3 — BigMHC immunogenicity (invoked via subprocess)
+# ---------------------------------------------------------------------------
+torch>=1.13.0
+psutil>=5.9.0          # required by BigMHC's predict.py; fails silently without it
+pandas>=2.0.0
+
+# ---------------------------------------------------------------------------
+# Layer 5 — Literature (IEDB Query API + NCBI E-utilities)
+# ---------------------------------------------------------------------------
+requests>=2.31.0
+
+# ---------------------------------------------------------------------------
+# Synthesis — Claude
+# ---------------------------------------------------------------------------
+# PINNED FLOOR: older anthropic releases pass a `proxies` kwarg that newer
+# httpx rejects with TypeError. Keep both current.
+anthropic>=0.40.0
+httpx>=0.27.0
+
+# ---------------------------------------------------------------------------
+# Config
+# ---------------------------------------------------------------------------
+python-dotenv>=1.0.0
+
+# ---------------------------------------------------------------------------
+# Validation / benchmarking
+# ---------------------------------------------------------------------------
+openpyxl>=3.1.0        # reading TESLA supplementary .xlsx
+
+# ---------------------------------------------------------------------------
+# Dev
+# ---------------------------------------------------------------------------
+pytest>=7.4.0

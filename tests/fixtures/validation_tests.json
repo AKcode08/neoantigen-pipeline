@@ -1,0 +1,87 @@
+{
+  "test_cases": [
+    {
+      "name": "good_input",
+      "input": {
+        "peptide": "KRASGSDFVQ",
+        "hla_alleles": ["HLA-A*02:01"],
+        "patient_data": {
+          "cancer_type": "pancreatic",
+          "expression_tpm": 150,
+          "vaf": 0.45
+        }
+      },
+      "expected": {
+        "is_valid": true,
+        "num_errors": 0,
+        "num_warnings": 0
+      }
+    },
+    {
+      "name": "peptide_too_short",
+      "input": {
+        "peptide": "KRAS",
+        "hla_alleles": ["HLA-A*02:01"]
+      },
+      "expected": {
+        "is_valid": false,
+        "num_errors": 1,
+        "num_warnings": 0
+      }
+    },
+    {
+      "name": "invalid_amino_acid",
+      "input": {
+        "peptide": "KRASXYZDEF",
+        "hla_alleles": ["HLA-A*02:01"]
+      },
+      "expected": {
+        "is_valid": false,
+        "num_errors": 1,
+        "num_warnings": 0
+      }
+    },
+    {
+      "name": "malformed_hla",
+      "input": {
+        "peptide": "KRASGSDFVQ",
+        "hla_alleles": ["A2:01"]
+      },
+      "expected": {
+        "is_valid": false,
+        "num_errors": 1,
+        "num_warnings": 0
+      }
+    },
+    {
+      "name": "low_expression_warning",
+      "input": {
+        "peptide": "KRASGSDFVQ",
+        "hla_alleles": ["HLA-A*02:01"],
+        "patient_data": {
+          "expression_tpm": 0.5
+        }
+      },
+      "expected": {
+        "is_valid": true,
+        "num_errors": 0,
+        "num_warnings": 1
+      }
+    },
+    {
+      "name": "low_vaf_warning",
+      "input": {
+        "peptide": "KRASGSDFVQ",
+        "hla_alleles": ["HLA-A*02:01"],
+        "patient_data": {
+          "vaf": 0.05
+        }
+      },
+      "expected": {
+        "is_valid": true,
+        "num_errors": 0,
+        "num_warnings": 1
+      }
+    }
+  ]
+}

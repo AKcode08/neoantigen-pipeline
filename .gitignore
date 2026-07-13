@@ -1,0 +1,63 @@
+# ============================================
+# SECRETS — never commit
+# ============================================
+.env
+.env.*
+!.env.example
+*.key
+credentials.json
+
+# ============================================
+# Python
+# ============================================
+venv/
+venv311/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# ============================================
+# Large external dependencies (users clone/pull these themselves)
+# ============================================
+bigmhc/
+mhcflurry-models/
+
+# ============================================
+# Generated outputs — large, reproducible
+# ============================================
+neoapred_structures/
+reports/
+*.pdb
+*.ply
+
+# ============================================
+# Caches
+# ============================================
+.cache/
+*.prd
+
+# ============================================
+# Benchmark artifacts
+# NOTE: keep the results JSON (small, they're the evidence),
+# but exclude bulky intermediates.
+# ============================================
+validation/__pycache__/
+
+# ============================================
+# OS / editor
+# ============================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

@@ -1,0 +1,5 @@
+epitope,mhc_type,source,immunogenicity_score
+XYZAABBCC,HLA-A*02:01,Synthetic,0.15
+QQQQQQQQQQ,HLA-A*02:01,Synthetic,0.12
+AAAAAAAAAA,HLA-B*07:02,Synthetic,0.08
+CCCCCCCCCC,HLA-B*07:02,Synthetic,0.10

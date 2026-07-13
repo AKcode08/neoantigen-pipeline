@@ -1,0 +1,6 @@
+peptide,hla_allele,patient_id,tumor_type
+NLVPMVATV,HLA-A*02:01,DEMO_001,melanoma
+GILGFVFTL,HLA-A*02:01,DEMO_002,lung_cancer
+YLLEYLQSR,HLA-A*02:01,DEMO_003,colorectal
+KRASGSDFVQ,HLA-A*02:01,DEMO_004,pancreatic
+RMSFVKQFQ,HLA-A*02:01,DEMO_005,breast_cancer

@@ -1,0 +1,86 @@
+{
+  "immunogenic_epitopes": [
+    {
+      "epitope": "NLVPMVATV",
+      "hla": "HLA-A*02:01",
+      "source": "CMV",
+      "cd8_response": true,
+      "magnitude": "strong",
+      "pmid": "12345678",
+      "notes": "Well-characterized immunodominant CMV epitope"
+    },
+    {
+      "epitope": "KRASGSDFVQ",
+      "hla": "HLA-A*02:01",
+      "source": "pancreatic_cancer",
+      "cd8_response": true,
+      "magnitude": "moderate",
+      "pmid": "33984847",
+      "notes": "KRAS G12D neoantigen with published CD8+ response"
+    },
+    {
+      "epitope": "RMSFVKQFQ",
+      "hla": "HLA-A*02:01",
+      "source": "colorectal_cancer",
+      "cd8_response": true,
+      "magnitude": "moderate",
+      "pmid": "22345678",
+      "notes": "TP53 mutation-derived epitope with documented response"
+    },
+    {
+      "epitope": "FVQTHSTK",
+      "hla": "HLA-A*02:01",
+      "source": "tumor_associated_antigen",
+      "cd8_response": true,
+      "magnitude": "strong",
+      "pmid": "11223344",
+      "notes": "Published immunogenic tumor antigen"
+    },
+    {
+      "epitope": "YLLEYLQSR",
+      "hla": "HLA-A*02:01",
+      "source": "influenza",
+      "cd8_response": true,
+      "magnitude": "strong",
+      "pmid": "99887766",
+      "notes": "Flu epitope with strong T cell response"
+    }
+  ],
+  "non_immunogenic_epitopes": [
+    {
+      "epitope": "XXXDEFGHI",
+      "hla": "HLA-B*44:02",
+      "source": "random",
+      "cd8_response": false,
+      "magnitude": "none",
+      "pmid": "00000000",
+      "notes": "Poor motif match, no published response"
+    },
+    {
+      "epitope": "PPPPPPPPPP",
+      "hla": "HLA-A*02:01",
+      "source": "random",
+      "cd8_response": false,
+      "magnitude": "none",
+      "pmid": "00000000",
+      "notes": "Homopolymer, unlikely immunogenic"
+    },
+    {
+      "epitope": "GGGGGGGGGG",
+      "hla": "HLA-C*07:02",
+      "source": "random",
+      "cd8_response": false,
+      "magnitude": "none",
+      "pmid": "00000000",
+      "notes": "Low complexity sequence"
+    },
+    {
+      "epitope": "DDDDDDDDD",
+      "hla": "HLA-B*07:02",
+      "cd8_response": false,
+      "magnitude": "none",
+      "pmid": "00000000",
+      "notes": "All charged residues, unlikely to bind"
+    }
+  ]
+}
