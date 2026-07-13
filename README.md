@@ -57,7 +57,7 @@ Two layers can leak the test label, and both are controlled:
 - **Literature layer** retrieves prior IEDB T-cell assay records for benchmark peptides: that is, information retrieval, not prediction. Every analysis runs in two modes: *honest* (literature OFF, the defensible number) and *leaked* (literature ON, an optimistic ceiling). The gap on ITSNdb is **+0.10 AUROC**: quantified, reported, never hidden.
 - **BigMHC** was trained on IEDB-overlapping data and may have seen ITSNdb peptides. Its measured contribution is therefore an upper bound. External validation on TESLA is the fix.
 
-All headline numbers use honest mode.
+All above numbers use honest mode.
 
 ---
 
