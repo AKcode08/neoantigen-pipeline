@@ -27,6 +27,8 @@ Input is a `(peptide, HLA allele)` pair. Output is a ranked recommendation with 
 
 The synthesis layer parses the generated PDB, reasons over per-residue anchor and TCR-contact geometry, contextualizes the literature hits, and produces a structured expert analysis — including catching category errors the numeric layers cannot (see *Why the LLM layer earns its place* below).
 
+**[→ View a sample report](NLVPMVATV_CMV_epitope_EXCLUDE.html)**
+(download and open in a browser — GitHub won't render the interactive 3D viewer inline)
 ---
 
 ## Validation
@@ -52,7 +54,7 @@ Benchmarked against **ITSNdb** ([Pertschy et al., 2024](https://github.com/elmer
 
 Two layers can leak the test label, and both are controlled:
 
-- **Literature layer** retrieves prior IEDB T-cell assay records for benchmark peptides — that is information retrieval, not prediction. Every analysis runs in two modes: *honest* (literature OFF, the defensible number) and *leaked* (literature ON, an optimistic ceiling). The gap on ITSNdb is **+0.10 AUROC** — quantified, reported, never hidden.
+- **Literature layer** retrieves prior IEDB T-cell assay records for benchmark peptides — that is, information retrieval, not prediction. Every analysis runs in two modes: *honest* (literature OFF, the defensible number) and *leaked* (literature ON, an optimistic ceiling). The gap on ITSNdb is **+0.10 AUROC** — quantified, reported, never hidden.
 - **BigMHC** was trained on IEDB-overlapping data and may have seen ITSNdb peptides. Its measured contribution is therefore an upper bound. External validation on TESLA is the fix.
 
 All headline numbers use honest mode.
@@ -164,7 +166,7 @@ NCBI_EMAIL=...
 ## Known limitations
 
 - **Dataset size.** 199 peptides across 5 folds gives ~40 test peptides per fold. The ±0.09–0.14 AUROC standard deviations are real; a different 199-peptide dataset could plausibly land anywhere in that band.
-- **Weights tuned on the evaluation dataset.** Per-fold threshold tuning was correctly isolated, but the 0.10 immunogenicity weight came from a sweep over the full ITSNdb set. The *direction* of the finding is robust; the exact magnitudes are not certified out-of-sample.
+- **Weights tuned on the evaluation dataset.** Per-fold threshold tuning was correctly isolated, but the 0.10 immunogenicity weight came from a sweep over the full ITSNdb set. The *direction* of the finding is robust; the exact magnitudes are not certified out of sample.
 - **BigMHC training overlap.** Its measured contribution is an upper bound for genuinely novel neoantigens.
 - **Structure evaluated as single static PDB.** Wild-type counterparts were not folded, so true mutant-vs-WT foreignness — the most promising structural feature — remains untested.
 
