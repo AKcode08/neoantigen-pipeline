@@ -48,7 +48,7 @@ Benchmarked against **ITSNdb** ([Pertschy et al., 2024](https://github.com/elmer
 | **L3-tuned (shipped)** | **0.62 ± 0.09** | **0.24 ± 0.14** | **0.55 ± 0.13** | **0.81 ± 0.05** | **0.24 ± 0.07** |
 | Random baseline | 0.50 | 0.00 | — | 0.65 | — |
 
-**Headline:** Of every 100 peptides the pipeline marks INCLUDE, ~81 are genuine immunogens, 16 points above the dataset prevalence of 65%, with a tight ±5% across folds.
+Of every 100 peptides the pipeline marks INCLUDE, ~81 are genuine immunogens, 16 points above the dataset prevalence of 65%, with a tight ±5% across folds.
 
 ### Leakage controls
 
