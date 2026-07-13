@@ -25,36 +25,36 @@ Input is a `(peptide, HLA allele)` pair. Output is a ranked recommendation with 
 | 5. Literature | What does published evidence say? | IEDB Query API + NCBI E-utilities (PubMed) |
 | **Synthesis** | **What does it all mean?** | **Claude Opus 4** |
 
-The synthesis layer parses the generated PDB, reasons over per-residue anchor and TCR-contact geometry, contextualizes the literature hits, and produces a structured expert analysis — including catching category errors the numeric layers cannot (see *Why the LLM layer earns its place* below).
+The synthesis layer parses the generated PDB, reasons over per-residue anchor and TCR-contact geometry, contextualizes the literature hits, and produces a structured expert analysis, including catching category errors the numeric layers cannot (see *Why the LLM layer earns its place* below).
 
 **[→ View a sample report](NLVPMVATV_CMV_epitope_EXCLUDE.html)**
-(download and open in a browser — GitHub won't render the interactive 3D viewer inline)
+(download and open in a browser as GitHub won't render the interactive 3D viewer inline)
 ---
 
 ## Validation
 
-Benchmarked against **ITSNdb** ([Pertschy et al., 2024](https://github.com/elmerfer/ITSNdb)) — 199 experimentally validated tumor neoantigens (129 immunogenic / 70 non-immunogenic). ITSNdb is deliberately pre-filtered so that every peptide already binds and is presented, isolating the hard question: *given presentation, which peptides actually elicit a T-cell response?*
+Benchmarked against **ITSNdb** ([Pertschy et al., 2024](https://github.com/elmerfer/ITSNdb)): 199 experimentally validated tumor neoantigens (129 immunogenic / 70 non-immunogenic). ITSNdb is deliberately pre-filtered so that every peptide already binds and is presented, isolating the hard question: *given presentation, which peptides actually elicit a T-cell response?*
 
 **Protocol:** 5-fold stratified cross-validation. Thresholds tuned exclusively on training folds; all metrics reported on held-out folds. Mean ± standard deviation across folds.
 
-### Results (honest mode — literature layer disabled)
+### Results (honest mode: literature layer disabled)
 
 | Configuration | AUROC | MCC | F1 | INCLUDE-precision | BORDERLINE-rate |
 |---|---|---|---|---|---|
-| L1 — binding only | 0.60 ± 0.14 | 0.26 ± 0.06 | 0.40 ± 0.15 | 0.91 ± 0.09 | 0.42 ± 0.24 |
-| L2 — + presentation | 0.61 ± 0.11 | 0.17 ± 0.14 | 0.46 ± 0.07 | 0.79 ± 0.10 | 0.12 ± 0.05 |
-| L3 — + immunogenicity (30% wt) | 0.59 ± 0.07 | 0.10 ± 0.17 | 0.34 ± 0.14 | 0.69 ± 0.10 | 0.11 ± 0.11 |
-| L4 — + structure | 0.57 ± 0.07 | 0.23 ± 0.13 | 0.30 ± 0.11 | 0.69 ± 0.09 | 0.18 ± 0.22 |
+| L1: binding only | 0.60 ± 0.14 | 0.26 ± 0.06 | 0.40 ± 0.15 | 0.91 ± 0.09 | 0.42 ± 0.24 |
+| L2: + presentation | 0.61 ± 0.11 | 0.17 ± 0.14 | 0.46 ± 0.07 | 0.79 ± 0.10 | 0.12 ± 0.05 |
+| L3: + immunogenicity (30% wt) | 0.59 ± 0.07 | 0.10 ± 0.17 | 0.34 ± 0.14 | 0.69 ± 0.10 | 0.11 ± 0.11 |
+| L4: + structure | 0.57 ± 0.07 | 0.23 ± 0.13 | 0.30 ± 0.11 | 0.69 ± 0.09 | 0.18 ± 0.22 |
 | **L3-tuned (shipped)** | **0.62 ± 0.09** | **0.24 ± 0.14** | **0.55 ± 0.13** | **0.81 ± 0.05** | **0.24 ± 0.07** |
 | Random baseline | 0.50 | 0.00 | — | 0.65 | — |
 
-**Headline:** of every 100 peptides the pipeline marks INCLUDE, ~81 are genuine immunogens — 16 points above the dataset prevalence of 65%, with a tight ±5% across folds.
+**Headline:** Of every 100 peptides the pipeline marks INCLUDE, ~81 are genuine immunogens, 16 points above the dataset prevalence of 65%, with a tight ±5% across folds.
 
 ### Leakage controls
 
 Two layers can leak the test label, and both are controlled:
 
-- **Literature layer** retrieves prior IEDB T-cell assay records for benchmark peptides — that is, information retrieval, not prediction. Every analysis runs in two modes: *honest* (literature OFF, the defensible number) and *leaked* (literature ON, an optimistic ceiling). The gap on ITSNdb is **+0.10 AUROC** — quantified, reported, never hidden.
+- **Literature layer** retrieves prior IEDB T-cell assay records for benchmark peptides: that is, information retrieval, not prediction. Every analysis runs in two modes: *honest* (literature OFF, the defensible number) and *leaked* (literature ON, an optimistic ceiling). The gap on ITSNdb is **+0.10 AUROC**: quantified, reported, never hidden.
 - **BigMHC** was trained on IEDB-overlapping data and may have seen ITSNdb peptides. Its measured contribution is therefore an upper bound. External validation on TESLA is the fix.
 
 All headline numbers use honest mode.
@@ -67,9 +67,9 @@ The benchmark was not a rubber stamp. It overturned two design decisions:
 
 **The immunogenicity layer was over-weighted 3×.** At its original 0.30 ensemble weight, BigMHC *degraded* both ranking and classification — MCC 0.10 ± 0.17, a standard deviation larger than the mean, i.e. instability rather than signal. A weight sweep located the empirical optimum at **0.10**, where the layer contributes a real and stable lift (MCC 0.24 ± 0.14, F1 0.55 ± 0.13). Weight sweeps are not optional.
 
-**The structural layer carried no discriminative signal.** The original implementation returned a constant for every peptide that folded successfully — zero discriminative power by construction. Rebuilding it with four interpretable per-PDB features (TCR-facing contact exposure, mutation-position TCR visibility, anchor-residue compatibility, Kyte-Doolittle hydrophobicity at TCR-facing positions) produced individual feature AUROCs of **0.49–0.50** — indistinguishable from random. The layer was dropped from the consensus score and retained only for the LLM's qualitative reasoning.
+**The structural layer carried no discriminative signal.** The original implementation returned a constant for every peptide that folded successfully, zero discriminative power by construction. Rebuilding it with four interpretable per-PDB features (TCR-facing contact exposure, mutation-position TCR visibility, anchor-residue compatibility, Kyte-Doolittle hydrophobicity at TCR-facing positions) produced individual feature AUROCs of **0.49–0.50**, indistinguishable from random. The layer was dropped from the consensus score and retained only for the LLM's qualitative reasoning.
 
-This is a negative result about *single-static-PDB hand-engineered features on a binding-pre-filtered dataset* — not a claim that structure is irrelevant to neoantigen prediction. The most likely path to signal (true mutant-vs-wild-type surface comparison, requiring both folds) was not tested.
+This is a negative result about *single-static-PDB hand-engineered features on a binding-pre-filtered dataset*, not a claim that structure is irrelevant to neoantigen prediction. The most likely path to signal (true mutant-vs-wild-type surface comparison, requiring both folds) was not tested.
 
 ### Shipped configuration
 
@@ -84,9 +84,9 @@ Thresholds are CV-derived, not intuition-set. The originals (0.70 / 0.30) produc
 
 ## Why the LLM layer earns its place
 
-The synthesis layer is deliberately **not** ablated in AUROC, and that is a methodological position rather than an omission. Claude reads the same five inputs the ensemble does — it cannot conjure signal that is not there, and scoring it as a sixth quantitative predictor would measure "a learned reweighting of inputs we already have," not its actual contribution.
+The synthesis layer is deliberately **not** ablated in AUROC, and that is a methodological position rather than an omission. Claude reads the same five inputs the ensemble does: it cannot conjure a signal that is not there, and scoring it as a sixth quantitative predictor would measure "a learned reweighting of inputs we already have," not its actual contribution.
 
-Its real value is **category-level reasoning that no reweighting can reach.** The clearest demonstration: `NLVPMVATV` scored highly across all five layers — 16.6 nM binding, 0.97 presentation, high immunogenicity, strong structure, 754 IEDB assays at a 98% positive response rate. The ensemble said INCLUDE with 0.93 consensus. Claude said **EXCLUDE**, correctly identifying it as the CMV pp65 immunodominant viral epitope — not a tumor neoantigen at all, and useless in a cancer vaccine regardless of how well it scores.
+Its real value is **category-level reasoning that no reweighting can reach.** The clearest demonstration: `NLVPMVATV` scored highly across all five layers: 16.6 nM binding, 0.97 presentation, high immunogenicity, strong structure, 754 IEDB assays at a 98% positive response rate. The ensemble said INCLUDE with 0.93 consensus. Claude said **EXCLUDE**, correctly identifying it as the CMV pp65 immunodominant viral epitope — not a tumor neoantigen at all, and useless in a cancer vaccine regardless of how well it scores.
 
 No numerical reweighting of those five layers reaches that conclusion. That is the layer's job.
 
