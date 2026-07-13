@@ -8,7 +8,7 @@ A meta-analysis pipeline for prioritizing neoantigen candidates in personalized 
 
 ## The problem
 
-Teams selecting neoantigens for personalized vaccines run several prediction tools like NetMHCpan, MHCflurry, BigMHC, PRIME — and routinely get conflicting scores. Reconciling them is manual, inconsistent, and rarely documented. This pipeline synthesizes multiple orthogonal signals into a single ranked, reasoned, auditable output.
+Teams selecting neoantigens for personalized vaccines run several prediction tools like NetMHCpan, MHCflurry, BigMHC, PRIME and routinely get conflicting scores. Reconciling them is manual, inconsistent, and rarely documented. This pipeline synthesizes multiple orthogonal signals into a single ranked, reasoned, auditable output.
 
 ---
 
